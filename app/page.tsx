@@ -1,6 +1,7 @@
 import { cafe, menu } from "../data/menu";
+import MenuWithCart from "../components/MenuWithCart";
 
-const categories = [...new Set(menu.map((item) => item.category))];
+
 const whatsappLink = `https://wa.me/${cafe.phone}?text=${encodeURIComponent(
   "Hi, I'd like to place an order"
 )}`;
@@ -32,32 +33,7 @@ export default function Home() {
       </section>
 
       {/* Menu */}
-      <section id="menu" className="mx-auto max-w-2xl px-6 py-14">
-        <h2 className="mb-8 text-center text-3xl font-semibold">Our Menu</h2>
-        {categories.map((category) => (
-          <div key={category} className="mb-8">
-            <h3 className="mb-3 text-xl font-semibold text-amber-800">
-              {category}
-            </h3>
-            <ul className="space-y-3">
-              {menu
-                .filter((item) => item.category === category)
-                .map((item) => (
-                  <li
-                    key={item.id}
-                    className="flex items-center justify-between rounded-lg bg-white p-4 shadow-sm"
-                  >
-                    <span className="flex items-center gap-3">
-                      <span className="text-2xl">{item.emoji}</span>
-                      {item.name}
-                    </span>
-                    <span className="font-medium">₹{item.price}</span>
-                  </li>
-                ))}
-            </ul>
-          </div>
-        ))}
-      </section>
+      <MenuWithCart menu={menu} phone={cafe.phone} />
 
       {/* About */}
       <section className="bg-white px-6 py-14 text-center">
