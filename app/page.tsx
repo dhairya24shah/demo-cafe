@@ -12,11 +12,14 @@ const mapSrc = `https://www.google.com/maps?q=${encodeURIComponent(
 )}&output=embed`;
 
 export default async function Home() {
-  const { data: menu } = await supabase
+  const { data: menu, error } = await supabase
     .from("menu_items")
     .select("*")
     .eq("available", true)
     .order("id");
+    if (error) {
+  console.error("SUPABASE ERROR:", error.message, "| code:", error.code, "| details:", error.details, "| hint:", error.hint);
+} 
 
   return (
     <main className="min-h-screen bg-amber-50 text-stone-800">
