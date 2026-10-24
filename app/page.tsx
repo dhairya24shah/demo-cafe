@@ -1,6 +1,8 @@
-import { cafe, menu } from "../data/menu";
+import { cafe } from "../data/menu";
+import { supabase } from "../lib/supabase";
 import MenuWithCart from "../components/MenuWithCart";
 
+export const dynamic = "force-dynamic";
 
 const whatsappLink = `https://wa.me/${cafe.phone}?text=${encodeURIComponent(
   "Hi, I'd like to place an order"
@@ -9,7 +11,13 @@ const mapSrc = `https://www.google.com/maps?q=${encodeURIComponent(
   cafe.address
 )}&output=embed`;
 
-export default function Home() {
+export default async function Home() {
+  const { data: menu } = await supabase
+    .from("menu_items")
+    .select("*")
+    .eq("available", true)
+    .order("id");
+
   return (
     <main className="min-h-screen bg-amber-50 text-stone-800">
       {/* Hero */}
@@ -32,8 +40,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Menu */}
-      <MenuWithCart menu={menu} phone={cafe.phone} />
+      {/* Menu (loaded from Supabase) */}
+      <MenuWithCart menu={menu ?? []} phone={cafe.phone} />
 
       {/* About */}
       <section className="bg-white px-6 py-14 text-center">
@@ -73,7 +81,7 @@ export default function Home() {
       </section>
 
       <footer className="py-6 text-center text-sm text-stone-500">
-        © © 2026 {cafe.name}. Sample website.
+        © {new Date().getFullYear()} {cafe.name}. Sample website.
       </footer>
     </main>
   );
