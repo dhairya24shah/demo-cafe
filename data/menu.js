@@ -1,7 +1,7 @@
 export const cafe = {
   name: "Demo Cafe",
   tagline: "Fresh coffee, snacks and good vibes",
-  phone: "910000000000", // country code + number, no + or spaces
+  phone: "917984820848", // country code + number, no + or spaces
   address: "12 Sample Street, Your City",
   timings: "Every day, 9:00 AM to 11:00 PM",
   about:
